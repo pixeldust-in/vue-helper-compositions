@@ -89,15 +89,6 @@ function callValidator(validationName: string, validationObj: any, value: any) {
     case 'regex':
       isValid = validationRules[validationName](validationObj.expression, value)
       break
-    case 'inverse_regex':
-      isValid = validationRules[validationName](validationObj.expression, value)
-      break
-    case 'maxValue':
-      isValid = validationRules[validationName](validationObj.maxValue, value)
-      break
-    case 'minValue':
-      isValid = validationRules[validationName](validationObj.minValue, value)
-      break
     case 'customHandler':
       isValid = validationObj.customHandler(value)
       break
@@ -107,12 +98,9 @@ function callValidator(validationName: string, validationObj: any, value: any) {
     case 'maxLength':
       isValid = validationRules[validationName](validationObj.maxLength, value)
       break
-    case 'multipleOf':
-      isValid = validationRules[validationName](validationObj.multiple, value)
-      break
     default:
-      if (validationRules[validationName]) {
-        isValid = validationRules[validationName](value)
+      if ((validationRules as any)[validationName]) {
+        isValid = (validationRules as any)[validationName](value)
       }
       break
   }
@@ -128,10 +116,10 @@ function validationHandler(value: any, validationArray: any) {
   } else {
     for (let i = 0; i < validationArray.length; i++) {
       if (typeof validationArray[i] == 'string') {
-        validationObject.isValid = validationRules[validationArray[i]](value)
+        validationObject.isValid = (validationRules as any)[validationArray[i]](value)
         validationObject.message = ''
         if (validationObject.isValid == false) {
-          validationObject.message = ValidationMessages[validationArray[i]]
+          validationObject.message = (ValidationMessages as any)[validationArray[i]]
         }
       } else if (typeof validationArray[i] == 'object') {
         if (validationArray[i].hasOwnProperty('name')) {
@@ -147,7 +135,7 @@ function validationHandler(value: any, validationArray: any) {
               validationObject.message = validationArray[i].message
             } else {
               validationObject.message =
-                ValidationMessages[validationArray[i].name]
+                (ValidationMessages as any)[validationArray[i].name]
             }
           }
         } else {
