@@ -1,11 +1,15 @@
 {
   "name": "vue-helper-compositions",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Reusable composition packages for Vue3 Composition API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc"
+  },
+  "repository": {
+    "url": "https://github.com/pixeldust-in/vue-helper-compositions",
+    "type": "git"
   },
   "keywords": [
     "composables",

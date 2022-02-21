@@ -2,6 +2,7 @@ import { IValidation } from './types'
 
 const MOBILE_REGEX = new RegExp(/^[6-9][\d]{9}$/)
 const EMAIL_REGEX = new RegExp(
+  //eslint-disable-next-line
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@([a-z\d]{1,}[a-z+\d_-]*)(([.][a-z]{2,}){1,})$/i,
 )
 
@@ -34,7 +35,7 @@ function mobile(mobile: string | number) {
 }
 
 function integer(integer: string | number) {
-  let IntegerRegex = new RegExp(/^\d+$/g)
+  const IntegerRegex = new RegExp(/^\d+$/g)
   return IntegerRegex.test(`${integer}`)
 }
 
@@ -108,7 +109,7 @@ function callValidator(validationName: string, validationObj: any, value: any) {
 }
 
 function validationHandler(value: any, validationArray: any) {
-  let validationObject: IValidation = { isValid: true, message: '' }
+  const validationObject: IValidation = { isValid: true, message: '' }
 
   if (Object.prototype.toString.call(validationArray) !== '[object Array]') {
     throw new Error('validationArray should be an array (In Validations.ts)')
@@ -116,12 +117,17 @@ function validationHandler(value: any, validationArray: any) {
   } else {
     for (let i = 0; i < validationArray.length; i++) {
       if (typeof validationArray[i] == 'string') {
-        validationObject.isValid = (validationRules as any)[validationArray[i]](value)
+        validationObject.isValid = (validationRules as any)[validationArray[i]](
+          value,
+        )
         validationObject.message = ''
         if (validationObject.isValid == false) {
-          validationObject.message = (ValidationMessages as any)[validationArray[i]]
+          validationObject.message = (ValidationMessages as any)[
+            validationArray[i]
+          ]
         }
       } else if (typeof validationArray[i] == 'object') {
+        //eslint-disable-next-line
         if (validationArray[i].hasOwnProperty('name')) {
           validationObject.isValid = callValidator(
             validationArray[i].name,
@@ -131,11 +137,13 @@ function validationHandler(value: any, validationArray: any) {
           validationObject.message = ''
           if (validationObject.isValid == false) {
             // checking if custom message is passed if not then use standard msgs
+            //eslint-disable-next-line
             if (validationArray[i].hasOwnProperty('message')) {
               validationObject.message = validationArray[i].message
             } else {
-              validationObject.message =
-                (ValidationMessages as any)[validationArray[i].name]
+              validationObject.message = (ValidationMessages as any)[
+                validationArray[i].name
+              ]
             }
           }
         } else {
