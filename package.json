@@ -1,6 +1,6 @@
 {
   "name": "vue-helper-compositions",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Reusable composition packages for Vue3 Composition API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -31,6 +31,6 @@
     "vue": "3.2.29"
   },
   "peerDependencies": {
-    "vue": "3.2.29"
+    "vue": ">=3.2.29"
   }
 }
